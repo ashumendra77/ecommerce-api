@@ -25,11 +25,12 @@ app.get('/', async function (req, res) {
 app.post('/product', async function (req, res) {
     try {
         console.log(req.body);
-        const Product = await Product.create(req.body);
-        res.status(201).json(Product);
+        const product = await Product.create(req.body);
+        res.status(201).json(product);
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json({err});
     }
+
 })
 
 
@@ -41,7 +42,7 @@ app.put('/product/:id', async function (req, res) {
         let product = await Product.findById(req.params.id);
         // const { id } = req.params;
 
-        product = await Product.findByIdAndUpdate( req.params.id,req.body,{new: true });
+        product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!product) {
             res.status(404).json('product not present')
         }
@@ -50,7 +51,7 @@ app.put('/product/:id', async function (req, res) {
         res.status(200).json({ product })
 
     } catch (error) {
-        res.status(404).json(error )
+        res.status(404).json(error)
 
     }
 
