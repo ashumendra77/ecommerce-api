@@ -62,15 +62,19 @@ app.put('/product/:id', async function (req, res) {
 
 //delete product
 
-// app.delete('/product/:id', async function (req, res) {
-//     const {id} = req.params.id;
-//     try {
-//         await Product.remove({ "_id": req.params.id });
-//         res.status(200).json({ data: { message: "product deleted" } });
-//     } catch (error) {
-//         res.status(400).json({ data: { message: "No product is found with the id" } });
-//     }
-// })
+app.delete('/product/:id', async function (req, res) {
+    // const {id} = req.params;
+    console.log(req.params);
+    console.log(id);
+    try {
+        const product = await Product.findById(req.params.id);
+product.remove();
+        // await Product.remove({ "_id": id });
+        res.status(200).json({ data: { message: "product deleted" } });
+    } catch (error) {
+        res.status(400).json({ data: { message: "No product is found with the id" } });
+    }
+})
 
 
 
