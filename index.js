@@ -28,7 +28,7 @@ app.post('/product', async function (req, res) {
         const product = await Product.create(req.body);
         res.status(201).json(product);
     } catch (err) {
-        res.status(500).json({err});
+        res.status(500).json({ err });
     }
 
 })
@@ -40,14 +40,12 @@ app.put('/product/:id', async function (req, res) {
 
     try {
         let product = await Product.findById(req.params.id);
-        // const { id } = req.params;
 
         product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!product) {
             res.status(404).json('product not present')
         }
 
-        // const product = await Product.findById(id);
         res.status(200).json({ product })
 
     } catch (error) {
@@ -63,14 +61,13 @@ app.put('/product/:id', async function (req, res) {
 //delete product
 
 app.delete('/product/:id', async function (req, res) {
-    // const {id} = req.params;
-    console.log(req.params);
-    console.log(id);
+    const { id } = req.params;
+    // console.log(id);
     try {
-        const product = await Product.findById(req.params.id);
-product.remove();
-        // await Product.remove({ "_id": id });
-        res.status(200).json({ data: { message: "product deleted" } });
+
+        Product.findByIdAndDelete(id).then(() => {
+            res.send("Deleted Successfully!...")
+        })
     } catch (error) {
         res.status(400).json({ data: { message: "No product is found with the id" } });
     }
