@@ -1,18 +1,20 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Product = require('./models/productModel')
-const port = 3000;
 const productRouter = require('./router/product')
+require('dotenv').config();
 
 const app = express();
 app.use(express.json());
+console.log("port no h ye",process.env.PORT);
+const port = parseInt(process.env.PORT) || 3000;
 
 
 app.listen(port, function (req, res) {
-    console.log("server is running on port", { port })
+    console.log("server is running on port 3000")
 })
 
-mongoose.connect('mongodb+srv://admin:admin@cluster0.uxvxgyl.mongodb.net/ecommerce-api?retryWrites=true&w=majority')
+mongoose.connect(process.env.DB_URL)
     .then(() => {
         console.log("connected to mongoo DB");
     }).catch((error) => {
